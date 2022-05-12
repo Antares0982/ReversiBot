@@ -1,3 +1,10 @@
+test*
+build/
+.vscode/
+.idea/
+cmake-build-debug/
+config.json
+
 # Prerequisites
 *.d
 
