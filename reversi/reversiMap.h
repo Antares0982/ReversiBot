@@ -47,7 +47,7 @@ public:
         copyFrom(m);
     }
 
-    ReversiMap(ReversiMap &&m) noexcept : map_uniptr(std::move(m.map_uniptr)) {}
+    ReversiMap(ReversiMap &&m) = default;
 
     virtual ~ReversiMap() = default;
 

@@ -39,7 +39,7 @@ public:
         memcpy(&pic_char[0], &_o.pic_char[0], _o.width * _o.height * 3);
     }
 
-    PicCreater(PicCreater &&_o) noexcept : pic_char(std::move(_o.pic_char)), width(_o.width), height(_o.height) {}
+    PicCreater(PicCreater &&_o) = default;
 
     virtual ~PicCreater() = default;
 
