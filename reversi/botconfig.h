@@ -3,8 +3,9 @@
 #ifndef MIRAICP_BOTCONFIG_H
 #define MIRAICP_BOTCONFIG_H
 
-#include "MiraiDefs.h"
-#include "json.hpp"
+#include "MiraiCPMacros.h"
+#include "commonTypes.h"
+#include <unordered_map>
 
 struct QQinfo {
     MiraiCP::QQID MASTERID;

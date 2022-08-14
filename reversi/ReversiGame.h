@@ -6,7 +6,6 @@
 #define MIRAICP_REVERSIGAME_H
 
 #include "Exception.h"
-#include "MiraiDefs.h"
 #include "PicCreater.h"
 #include "ReversiTools.h"
 #include "botconfig.h"

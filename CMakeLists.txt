@@ -9,24 +9,28 @@ project(reversiBotMiraiCP LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 # 在64位编译
 set(BUILD_USE_64BITS on)
-
+# opencv
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
-
+# MiraiCP source
 set(MIRAI_CPP_PATH $ENV{MIRAI_CPP_PATH})
-
-message("MiraiCP source code at ${MIRAI_CPP_PATH}")
+set(MIRAI_COMMON_PATH $ENV{MIRAI_CPP_PATH}/../common)
+#
+message("MiraiCP source code at ${MIRAI_CPP_PATH}, common include at ${MIRAI_COMMON_PATH}")
 
 # 寻找编译的文件
 file(GLOB USER_LIBS_PATH ./reversi/*.cpp)
 file(GLOB MIRAI_CPP_FILE ${MIRAI_CPP_PATH}/*.cpp)
-file(GLOB MIRAI_H_FILE ${MIRAI_CPP_PATH}/*.h*)
+file(GLOB MIRAI_COMMON_CPP_FILE ${MIRAI_COMMON_PATH}/*.cpp)
 
 # 添加include
 include_directories(${MIRAI_CPP_PATH})
 include_directories(${MIRAI_CPP_PATH}/../3rd_include)
 include_directories(${MIRAI_CPP_PATH}/../3rd_include/utf8)
 include_directories(${MIRAI_CPP_PATH}/../3rd_include/utf8/utf8)
+include_directories(${MIRAI_CPP_PATH}/../3rd_include/json)
+include_directories(${MIRAI_CPP_PATH}/../3rd_include/json/nlohmann)
+include_directories(${MIRAI_COMMON_PATH})
 
 # 构建动态链接库
 add_library(
@@ -35,7 +39,7 @@ add_library(
         main.cpp
         ${USER_LIBS_PATH}
         ${MIRAI_CPP_FILE}
-        ${MIRAI_H_FILE}
+        ${MIRAI_COMMON_CPP_FILE}
 )
 
 # JNI
