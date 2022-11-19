@@ -67,7 +67,7 @@ std::string ReversiServer::rawDraw(s_QQID id) {
     return game.drawPic(id);
 }
 
-void ReversiServer::helpMessage(MiraiCP::MessageEvent *e) {
+void ReversiServer::helpMessage(MiraiCP::IMessageEvent *e) {
     e->chat()->sendMessage("群聊中使用\"reversi pvp\"或\"reversi pve\"开始游戏，用\"reversi\"加入游戏。私聊时使用\"reversi\"开始游戏。用\"abort\"放弃或终止一场超时的游戏。");
 }
 
@@ -77,7 +77,7 @@ void ReversiServer::groupHandle(MiraiCP::GroupMessageEvent e) {
     s_QQID hashid = -to_sqqid(e.group.id());
 
     if (e.sender.id() == QQCONFIG.MASTERID && !e.message.empty() && e.message[0].type() == MiraiCP::PlainText::type()) {
-        auto msg = e.message[0].get<MiraiCP::PlainText>().content;
+        auto msg = e.message[0].getVal<MiraiCP::PlainText>().content;
         if (ReversiTools::isPrefixOf("disable", msg)) {
             reversiServer.disabled.insert(hashid);
             reversiServer.server_memory.erase(hashid);
@@ -263,7 +263,7 @@ void ReversiServer::runReversiServerPrivate(MiraiCP::PrivateMessageEvent &e) {
     throw MiraiCP::IllegalStateException("unreachable code", MIRAICP_EXCEPTION_WHERE);
 }
 
-void ReversiServer::chooseSide(s_QQID hashid, MiraiCP::MessageEvent *evt, std::vector<MiraiCP::PlainText> &texts) {
+void ReversiServer::chooseSide(s_QQID hashid, MiraiCP::IMessageEvent *evt, std::vector<MiraiCP::PlainText> &texts) {
     auto &game = reversiServer.server_memory[hashid];
     auto &status = reversiServer.status_memory[hashid];
 
@@ -319,7 +319,7 @@ void ReversiServer::chooseAi(s_QQID hashid, MiraiCP::Contact *chat, std::vector<
     }
 }
 
-void ReversiServer::rivalIn(s_QQID hashid, MiraiCP::MessageEvent *evt, std::vector<MiraiCP::PlainText> &texts) {
+void ReversiServer::rivalIn(s_QQID hashid, MiraiCP::IMessageEvent *evt, std::vector<MiraiCP::PlainText> &texts) {
     auto &status = reversiServer.status_memory[hashid];
     auto &game = reversiServer.server_memory[hashid];
     if (evt->from()->id() == game.getblackid()) return;
@@ -333,7 +333,7 @@ void ReversiServer::rivalIn(s_QQID hashid, MiraiCP::MessageEvent *evt, std::vect
     }
 }
 
-void ReversiServer::playing(s_QQID hashid, MiraiCP::MessageEvent *evt) {
+void ReversiServer::playing(s_QQID hashid, MiraiCP::IMessageEvent *evt) {
     ReversiInput _input;
 
     auto &mem = reversiServer.server_memory;
@@ -346,7 +346,7 @@ void ReversiServer::playing(s_QQID hashid, MiraiCP::MessageEvent *evt) {
         auto &message = messages[0];
         if (message.type() != MiraiCP::PlainText::type()) return;
 
-        const std::string &str = message.get<MiraiCP::PlainText>().content;
+        const std::string &str = message.getVal<MiraiCP::PlainText>().content;
         if (str.size() < 2) return;
 
         bool playerblack = evt->from()->id() == game.getblackid();

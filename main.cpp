@@ -13,16 +13,22 @@
 #include <functional>
 
 using namespace MiraiCP;
+const PluginConfig CPPPlugin::config{
+        "0982",
+        "AntaresTesting",
+        "v1.0.0", "Antares",
+        "Test mirai plugin",
+        "2021/10/19"};
+
 
 class Main : public CPPPlugin {
 public:
     // 配置插件信息
-    Main() : CPPPlugin(PluginConfig(
-                     "0982",
-                     "AntaresTesting",
-                     "v1.0.0", "Antares",
-                     "Test mirai plugin",
-                     "2021/10/19")) {
+    Main() : CPPPlugin() {
+    }
+
+    void onEnable() override {
+        // 监听
         Event::registerEvent<GroupMessageEvent>(ReversiServer::groupHandle);
         Event::registerEvent<PrivateMessageEvent>(ReversiServer::privateHandle);
 
@@ -41,10 +47,6 @@ public:
         });
     }
 
-    void onEnable() override {
-        // 监听
-    }
-
     void onDisable() override {
         /*插件结束*/
         ReversiServer::cleanUp();
@@ -53,7 +55,7 @@ public:
 
 // 绑定当前插件实例
 void MiraiCP::enrollPlugin() {
-    enrollPlugin0(new Main());
+    enrollPlugin<Main>();
 }
 
 #endif

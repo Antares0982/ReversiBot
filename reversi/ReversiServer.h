@@ -15,7 +15,7 @@ using s_QQID = long long;
 
 namespace MiraiCP {
     class Contact;
-    class MessageEvent;
+    class IMessageEvent;
     class GroupMessageEvent;
     class PrivateMessageEvent;
     class PlainText;
@@ -56,7 +56,7 @@ public:
 
     static void privateHandle(MiraiCP::PrivateMessageEvent e);
 
-    static void helpMessage(MiraiCP::MessageEvent *e);
+    static void helpMessage(MiraiCP::IMessageEvent *e);
 
 private:
     static void runReversiServerGroup(MiraiCP::GroupMessageEvent &e, const std::string &_type);
@@ -64,13 +64,13 @@ private:
     static void runReversiServerPrivate(MiraiCP::PrivateMessageEvent &e);
 
     // 状态转移
-    static void chooseSide(s_QQID hashid, MiraiCP::MessageEvent *evt, std::vector<MiraiCP::PlainText> &texts);
+    static void chooseSide(s_QQID hashid, MiraiCP::IMessageEvent *evt, std::vector<MiraiCP::PlainText> &texts);
 
     static void chooseAi(s_QQID hashid, MiraiCP::Contact *chat, std::vector<MiraiCP::PlainText> &texts);
 
-    static void rivalIn(s_QQID hashid, MiraiCP::MessageEvent *evt, std::vector<MiraiCP::PlainText> &texts);
+    static void rivalIn(s_QQID hashid, MiraiCP::IMessageEvent *evt, std::vector<MiraiCP::PlainText> &texts);
 
-    static void playing(s_QQID hashid, MiraiCP::MessageEvent *evt);
+    static void playing(s_QQID hashid, MiraiCP::IMessageEvent *evt);
 
     static std::string rawDraw(s_QQID);
 };
