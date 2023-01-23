@@ -41,7 +41,7 @@ public:
             try {
                 auto f = Friend(QQCONFIG.MASTERID, QQCONFIG.BOTID);
                 auto e_ptr = e.getException();
-                f.sendMessage("黑白棋bot出现了未经处理的异常，类型：" + e_ptr->getExceptionType() + "，内容：" + e_ptr->getError() + "\n文件：" + e_ptr->filename + "，行号：" + std::to_string(e_ptr->lineNum));
+                f.sendMessage(MiraiCP::PlainText("黑白棋bot出现了未经处理的异常，类型：" + e_ptr->getExceptionType() + "，内容：" + e_ptr->getError() + "\n文件：" + e_ptr->filename + "，行号：" + std::to_string(e_ptr->lineNum)));
             } catch (...) { // catch all exception, else infinite loop of MiraiCPExceptionEvent will occur
             }
         });

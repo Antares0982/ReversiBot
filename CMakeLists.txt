@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 20)
 # 在64位编译
 set(BUILD_USE_64BITS on)
 # json库启用C++17标准
-add_compile_definitions(JSON_HAS_CPP_17)
+add_compile_definitions(JSON_HAS_CPP_17 MIRAICP_LIB_SDK JSON_MultipleHeaders=ON)
 
 if (WIN32)
     # See Warning C4668

@@ -76,7 +76,7 @@ void ReversiServer::groupHandle(MiraiCP::GroupMessageEvent e) {
 
     s_QQID hashid = -to_sqqid(e.group.id());
 
-    if (e.sender.id() == QQCONFIG.MASTERID && !e.message.empty() && e.message[0].type() == MiraiCP::PlainText::type()) {
+    if (e.sender.id() == QQCONFIG.MASTERID && !e.message.empty() && e.message[0].getType() == MiraiCP::PlainText::type()) {
         auto msg = e.message[0].getVal<MiraiCP::PlainText>().content;
         if (ReversiTools::isPrefixOf("disable", msg)) {
             reversiServer.disabled.insert(hashid);
@@ -288,7 +288,7 @@ void ReversiServer::chooseSide(s_QQID hashid, MiraiCP::IMessageEvent *evt, std::
     }
 
     auto names = ReversiGame::getAInamesString();
-    evt->chat()->sendMessage("请选择AI，可选的AI有\n" + names);
+    evt->chat()->sendMessage(MiraiCP::PlainText("请选择AI，可选的AI有\n" + names));
     status = CHOOSING_AI;
 }
 
@@ -344,7 +344,7 @@ void ReversiServer::playing(s_QQID hashid, MiraiCP::IMessageEvent *evt) {
 
         if (messages.size() != 1) return;
         auto &message = messages[0];
-        if (message.type() != MiraiCP::PlainText::type()) return;
+        if (message.getType() != MiraiCP::PlainText::type()) return;
 
         const std::string &str = message.getVal<MiraiCP::PlainText>().content;
         if (str.size() < 2) return;
